@@ -32,15 +32,24 @@ public class NoteService {
         return note;
     }
 
-    public void deleteById(long id) {
+    public void deleteById(long id) throws NoteNotFoundException {
+        if (!noteStorage.containsKey(id)) {
+            throw new NoteNotFoundException();
+        }
         noteStorage.remove(id);
     }
 
-    public void update(Note note) {
+    public void update(Note note) throws NoteNotFoundException {
+        if (!noteStorage.containsKey(note.getId())) {
+            throw new NoteNotFoundException();
+        }
         noteStorage.put(note.getId(), note);
     }
 
-    public Note getById(long id) {
+    public Note getById(long id) throws NoteNotFoundException {
+        if (!noteStorage.containsKey(id)) {
+            throw new NoteNotFoundException();
+        }
         return noteStorage.get(id);
     }
 }
